@@ -6,14 +6,21 @@ std::string Shape::name() const {
 Color Shape::color() const {
     return color_;
 }
-
 Shape::Shape() :
     color_( Color{} ),
-    name_( "no name" ) {}
+    name_( "no name" ) {
+        std::cout << "Shape() class" << std::endl;
+    }
 
 Shape::Shape(Color const& rgb, std::string const& name) :
     color_( rgb ),
-    name_( name ) {}
+    name_( name ) {
+        std::cout << "Shape( stuff ) class" << std::endl;
+    }
+
+Shape::~Shape() {
+    std::cout << "~Shape() class" << std::endl;
+}
 
 std::ostream& Shape::print(std::ostream& os) const {
     os << "Color:    " << color() << std::endl << "Name:     "

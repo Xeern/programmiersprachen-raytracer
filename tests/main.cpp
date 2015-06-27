@@ -6,6 +6,7 @@
 
 TEST_CASE("Sphere","[testing_sphere]")
 {
+    std::cout << "  First test" << std::endl;
     Sphere sp1;
     glm::vec3 ur{};
     Color white{0.0, 0.0, 0.0};
@@ -37,6 +38,9 @@ TEST_CASE("Sphere","[testing_sphere]")
 
 TEST_CASE("Box","[testing_Box]")
 {
+    std::cout << "------------------------------------------------------"
+    << std::endl;
+    std::cout << "  Second test" << std::endl;
     Box bx1;
     Color white{0.0, 0.0, 0.0};
     REQUIRE(bx1.minimum() == glm::vec3(0.0, 0.0, 0.0));
@@ -74,17 +78,76 @@ TEST_CASE("Box","[testing_Box]")
 
 TEST_CASE("print", "[testing_print]")
 {
+    std::cout << "------------------------------------------------------"
+    << std::endl;
     using namespace std;
+    cout << "  Third test" << endl;
 
     Color red{255, 0, 0};
     Sphere sp1{glm::vec3{2.5, 3.5, 1.5}, 5.5, red, "That Sphere"};
+    cout << endl;
     cout << sp1 << endl;
 
     Color blue{0, 255, 0};
     glm::vec3 min{-1.0, 1.0, 0.0};
     glm::vec3 max{3.0, 6.0, 11.0};
     Box bx1{min, max, blue, "That Box"};
+    cout << endl;
     cout << bx1 << endl;
+}
+
+TEST_CASE("intersectRaySphere", "[intersect]")
+{
+    std::cout << "------------------------------------------------------"
+    << std::endl;
+    std::cout << "  Fourth test" << std::endl;
+    //Ray
+    glm::vec3 ray_origin(0.0, 0.0, 0.0);
+    // ray direction has to be normalized
+    // you can use:     v = glm::normalize(some_vector)
+    glm::vec3 ray_direction(0.0, 0.0, 1.0);
+
+    //Sphere
+    glm::vec3 sphere_center(0.0, 0.0, 5.0);
+    float sphere_radius(1.0);
+
+    float distance(0.0);
+    auto result = glm::intersectRaySphere(ray_origin, ray_direction,
+        sphere_center, sphere_radius, distance);
+    REQUIRE(distance == Approx(4.0f));
+}
+
+TEST_CASE("intersect", "[intersect]")
+{
+    std::cout << "------------------------------------------------------"
+    << std::endl;
+    std::cout << "  Fifth test" << std::endl;
+    glm::vec3 orig{0.0, 0.0, 0.0};
+    glm::vec3 dir{0.0, 0.0, 1.0};
+    Ray line(orig, dir);
+    Sphere sp1{glm::vec3{0.0, 0.0, 6.0}, 1.0};
+    float distance(0.0);
+    sp1.intersect(line, distance);
+    REQUIRE(distance == Approx(5.0f));
+}
+
+TEST_CASE("virtual_construtor_destructor", "[virtual]")
+{
+    std::cout << "------------------------------------------------------"
+    << std::endl;
+    std::cout << "  Sixth test" << std::endl;
+
+    Color red(255, 0, 0);
+    glm::vec3 position(0,0,0);
+    Sphere* s1 = new Sphere(position, 1.2, red, "sphere0");
+    Shape* s2 = new Sphere(position, 1.2, red, "sphere1");
+    std::cout << std::endl;
+    s1->print(std::cout);
+    std::cout << std::endl;
+    s2->print(std::cout);
+    std::cout << std::endl;
+    delete s1;
+    delete s2;
 }
 
 int main(int argc, char *argv[])

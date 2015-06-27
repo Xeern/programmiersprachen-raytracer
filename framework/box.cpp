@@ -3,18 +3,28 @@
 Box::Box() :
 Box::Shape(),
     min_{0.0, 0.0, 0.0},
-    max_{0.0, 0.0, 0.0} {}
+    max_{0.0, 0.0, 0.0} {
+        std::cout << "Box() class" << std::endl;
+    }
 
 Box::Box(glm::vec3 const& minimum, glm::vec3 const& maximum) :
 Box::Shape(),
     min_{ minimum },
-    max_{ maximum } {}
+    max_{ maximum } {
+        std::cout << "Box( stuff ) class" << std::endl;
+    }
 
 Box::Box(glm::vec3 const& minimum, glm::vec3 const& maximum, Color const& rgb,
     std::string const& name) :
 Box::Shape(rgb, name),
     min_{ minimum },
-    max_{ maximum } {}
+    max_{ maximum } {
+        std::cout << "Box( more stuff ) class" << std::endl;
+    }
+
+Box::~Box() {
+    std::cout << "~Box() class" << std::endl;
+}
 
 glm::vec3 const& Box::minimum() const{
     return min_;

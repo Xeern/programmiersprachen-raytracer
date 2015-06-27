@@ -15,6 +15,7 @@ public:
     virtual std::ostream& print(std::ostream& os) const;
     std::string name() const;
     Color color() const;
+    /*virtual*/ ~Shape();
 
 protected:
     Shape();

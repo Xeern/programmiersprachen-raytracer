@@ -3,18 +3,28 @@
 Sphere::Sphere() :
 Sphere::Shape(),
     mid_{0.0, 0.0, 0.0},
-    rad_{0.0} {}
+    rad_{0.0} {
+        std::cout << "Sphere() class" << std::endl;
+    }
 
 Sphere::Sphere(glm::vec3 const& center, float r) :
 Sphere::Shape(),
     mid_{ center },
-    rad_{ r } {}
+    rad_{ r } {
+        std::cout << "Sphere( stuff ) class" << std::endl;
+    }
 
 Sphere::Sphere(glm::vec3 const& center, float r, Color const& rgb,
     std::string const& name) :
 Sphere::Shape(rgb, name),
     mid_{ center },
-    rad_{ r } {}
+    rad_{ r } {
+        std::cout << "Sphere( more stuff ) class" << std::endl;
+    }
+
+Sphere::~Sphere() {
+    std::cout << "~Sphere() class" << std::endl;
+}
 
 glm::vec3 const& Sphere::center() const {
     return mid_;
@@ -40,4 +50,9 @@ std::ostream& Sphere::print(std::ostream& os) const {
     os << "Area:     " << area() << std::endl;
     os << "Volume:   " << volume() << std::endl;
     return os;
+}
+
+bool Sphere::intersect(Ray const& ray, float& distance) const {
+    return glm::intersectRaySphere(ray.origin_, glm::normalize(ray.direction_), center(),
+        radius(), distance);
 }
